@@ -27,10 +27,23 @@ def create
 
     respond_to do |format|
       if @portfolio_items.update(params.require(:portfolio).permit(:title,:subtitle, :body))
-        format.html { redirect_to portfolios_path, notice: "Portfolio was successfully updated." }
+        format.html { redirect_to portfolios_path, notice: "Record was successfully updated." }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def show 
+    @portfolio_items=Portfolio.find(params[:id])
+  end
+  def destroy
+    #perform the lookup
+    @portfolio_items=Portfolio.find(params[:id])
+    #this is going to destroy
+    @portfolio_items.destroy
+    respond_to do |format|
+      format.html { redirect_to portfolios_url, notice: "record was successfully destroyed." }
     end
   end
 
